@@ -150,6 +150,14 @@ async function main() {
             core.endGroup()
         }
 
+        core.startGroup("Debug")
+        await exec.exec("docker", [
+            "exec",
+            container,
+            "ls", "-la", ".git"
+        ])
+        core.endGroup()
+
         if (revision) {
             core.startGroup("Create tarball")
             await exec.exec("docker", [
