@@ -95,6 +95,10 @@ async function main() {
         console.log(details)
         core.endGroup()
 
+        core.startGroup("Check sourceDirectory")
+        await exec.exec("ls", ["-la", sourceDirectory])
+        core.endGroup()
+
         if (cpuArchitecture != "amd64") {
             core.startGroup("Install QEMU")
             // Need newer QEMU to avoid errors
@@ -123,6 +127,21 @@ async function main() {
         core.startGroup("Start container")
         await exec.exec("docker", [
             "start",
+            container
+        ])
+        core.endGroup()
+
+        core.startGroup("Check sourceDirectory")
+        await exec.exec("docker", [
+            "exec",
+            container,
+            "ls", "-la", sourceDirectory
+        ])
+        core.endGroup()
+
+        core.startGroup("Show container inspect")
+        await exec.exec("docker", [
+            "inspect",
             container
         ])
         core.endGroup()
