@@ -208,7 +208,8 @@ async function main() {
                 "exec",
                 container,
                 "bash", "-c",
-                `apt-get build-dep -yq -t '${imageTag}' '${sourceDirectory}' || apt-get build-dep -yq '${sourceDirectory}'`
+//                `apt-get build-dep -yq -t '${imageTag}' '${sourceDirectory}' || apt-get build-dep -yq '${sourceDirectory}'`
+                `cd '${sourceDirectory}' && apt-get build-dep -yq -t '${imageTag}' . || apt-get build-dep -yq .`
             ])
             core.endGroup()
         }
